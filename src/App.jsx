@@ -1,25 +1,78 @@
+import React, { useState } from 'react'
 import './index.css'
 
 const projects = [
   {
+    id: 1,
     title: 'Void Prop Pack',
     category: 'Props & Objets',
     description: 'Collection de props futuristes, détaillés et prêts pour des environnements sci-fi.',
+    year: '2026',
+    summary:
+      'Une série de props conçus pour des environnements futuristes immersifs, pensés pour être lisibles, détaillés et cohérents visuellement dans un univers sci-fi sombre.',
+    challenge:
+      'Créer des objets de gameplay et de décor qui restaient lisibles à distance tout en offrant un niveau de détail suffisant pour le rendu et l’immersion visuelle.',
+    results: [
+      'Modularité visuelle pour des environnements de jeu',
+      'Palette sombre et technologique cohérente',
+      'Assets prêts à intégrer dans un univers narratif futuriste',
+    ],
+    tools: ['Blender', 'Substance', 'Marmoset', 'Unity'],
+    mood: 'Sombre • Technique • Futuriste',
   },
   {
+    id: 2,
     title: 'Nebula Rifle',
     category: 'Armes & Équipements',
     description: 'Modèle d’arme stylisée pour un univers spatial, pensée pour le jeu et la présentation.',
+    year: '2025',
+    summary:
+      'Une arme de poing à l’esthétique avancée, conçue pour un univers à forte identité visuelle, avec un design agressif, technique et lisible en gameplay.',
+    challenge:
+      'Équilibrer la personnalité visuelle de l’arme avec une silhouette claire pour la perception du joueur et la cohérence de l’univers.',
+    results: [
+      'Forme distinctive et mémorable',
+      'Mise en valeur des pièces mécaniques et de la silhouette',
+      'Design compatible avec un univers spatial immersif',
+    ],
+    tools: ['Blender', 'ZBrush', 'Substance', 'Unreal'],
+    mood: 'Agressif • Sleek • Spatial',
   },
   {
+    id: 3,
     title: 'Cryptic Creature',
     category: 'Créatures',
     description: 'Créature originale à l’ambiance sombre et organique, conçue pour des environnements immersifs.',
+    year: '2026',
+    summary:
+      'Une créature inspirée de formes organiques et mécaniques hésitant entre biologie et mythologie, pensée pour intégrer des univers sombres et mystérieux.',
+    challenge:
+      'Créer une silhouette forte qui fonctionne à la fois en gros plan et à distance, tout en gardant un rendu organique et crédible.',
+    results: [
+      'Silhouette claire et mémorable',
+      'Mise en scène très immersive',
+      'Personnalité visuelle forte et originale',
+    ],
+    tools: ['Blender', 'Photoshop', 'ZBrush'],
+    mood: 'Mystique • Organique • Sombre',
   },
   {
+    id: 4,
     title: 'Deep Space Station',
     category: 'Environnements',
     description: 'Décor de station spatiale avec un rendu atmosphérique et une lisibilité de gameplay.',
+    year: '2024',
+    summary:
+      'Une station spatiale conçue comme un lieu de jeu, avec une lecture claire de l’espace, un environnement dense et une atmosphère très immersive.',
+    challenge:
+      'Créer un environnement crédible, lisible et esthétiquement cohérent sans perdre la sensation de profondeur et de grandeur spatiale.',
+    results: [
+      'Environnement lisible et géométrique',
+      'Atmosphère immersive et futuriste',
+      'Très bon potentiel pour la mise en scène de gameplay',
+    ],
+    tools: ['Blender', 'UE5', 'Substance', 'Maya'],
+    mood: 'Atmosphérique • Spatial • Industriel',
   },
 ]
 
@@ -41,7 +94,120 @@ const socials = [
 ]
 
 function App() {
-  return (
+  const [activeProject, setActiveProject] = useState(projects[0])
+  const [showProject, setShowProject] = useState(false)
+
+  const openProject = (project) => {
+    setActiveProject(project)
+    setShowProject(true)
+  }
+
+  const goBackToPortfolio = () => {
+    setShowProject(false)
+  }
+
+  const renderProjectDetail = () => {
+    if (!activeProject) return null
+
+    return (
+      <div className="project-page-shell">
+        <header className="project-topbar detail-header">
+          <div className="brand">
+            <span className="brand-mark">G</span>
+            <span>GemerRetro</span>
+          </div>
+
+          <button className="btn secondary back-btn" onClick={goBackToPortfolio}>
+            ← Retour au portfolio
+          </button>
+        </header>
+
+        <main className="project-detail-page">
+          <section className="project-detail-hero">
+            <div className="project-detail-visual-wrap">
+              <div className={`project-visual visual-${activeProject.id}`} />
+            </div>
+
+            <div className="project-detail-copy">
+              <p className="eyebrow">{activeProject.category}</p>
+              <h1>{activeProject.title}</h1>
+              <p className="project-mood">{activeProject.mood}</p>
+              <p className="project-summary">{activeProject.summary}</p>
+
+              <div className="project-meta-row">
+                <span>{activeProject.year}</span>
+                <span>Art direction</span>
+                <span>3D asset creation</span>
+              </div>
+
+              <div className="project-tool-list">
+                {activeProject.tools.map((tool) => (
+                  <span key={tool} className="tool-pill">{tool}</span>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="project-section-grid">
+            <article className="project-info-card">
+              <p className="eyebrow">Défi</p>
+              <p>{activeProject.challenge}</p>
+            </article>
+
+            <article className="project-info-card bright-card">
+              <p className="eyebrow">Résultat</p>
+              <ul>
+                {activeProject.results.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+          </section>
+
+          <section className="project-showcase">
+            <div className="showcase-panel big-panel">
+              <div className={`project-visual visual-${activeProject.id}`} />
+            </div>
+            <div className="showcase-panel small-panel">
+              <div className={`project-visual visual-${activeProject.id}`} />
+            </div>
+            <div className="showcase-panel small-panel">
+              <div className={`project-visual visual-${activeProject.id}`} />
+            </div>
+          </section>
+
+          <section className="related-projects">
+            <div className="section-heading compact-heading">
+              <p className="eyebrow">Autres projets</p>
+              <h2>Plus de créations</h2>
+            </div>
+
+            <div className="project-grid">
+              {projects
+                .filter((project) => project.id !== activeProject.id)
+                .map((project) => (
+                  <article key={project.id} className="project-card">
+                    <div className="project-image">
+                      <div className={`project-visual visual-${project.id}`} />
+                    </div>
+                    <div className="project-body">
+                      <span className="project-tag">{project.category}</span>
+                      <h3>{project.title}</h3>
+                      <p>{project.description}</p>
+                      <button className="text-link" onClick={() => openProject(project)}>
+                        Voir le projet
+                      </button>
+                    </div>
+                  </article>
+                ))}
+            </div>
+          </section>
+        </main>
+      </div>
+    )
+  }
+
+  const renderPortfolio = () => (
     <div className="app-shell">
       <header className="topbar">
         <div className="brand">
@@ -68,7 +234,9 @@ function App() {
             </p>
 
             <div className="cta-row">
-              <a className="btn primary" href="#portfolio">Voir le portfolio</a>
+              <button className="btn primary" onClick={() => openProject(projects[0])}>
+                Voir le portfolio
+              </button>
               <a className="btn secondary" href="#contact">Me contacter</a>
             </div>
 
@@ -107,6 +275,9 @@ function App() {
                   <span className="project-tag">{project.category}</span>
                   <h3>{project.title}</h3>
                   <p>{project.description}</p>
+                  <button className="text-link" onClick={() => openProject(project)}>
+                    Voir le projet
+                  </button>
                 </div>
               </article>
             ))}
@@ -209,6 +380,8 @@ function App() {
       </footer>
     </div>
   )
+
+  return showProject ? renderProjectDetail() : renderPortfolio()
 }
 
 export default App
