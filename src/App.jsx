@@ -93,6 +93,14 @@ const socials = [
   { label: 'Discord', href: 'https://discord.com' },
 ]
 
+const scrollToSection = (id) => {
+  const element = document.getElementById(id)
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+  window.history.replaceState(null, '', window.location.pathname + window.location.search)
+}
+
 function App() {
   const [activeProject, setActiveProject] = useState(projects[0])
   const [showProject, setShowProject] = useState(false)
@@ -100,10 +108,13 @@ function App() {
   const openProject = (project) => {
     setActiveProject(project)
     setShowProject(true)
+    window.history.replaceState(null, '', window.location.pathname + window.location.search)
   }
 
   const goBackToPortfolio = () => {
     setShowProject(false)
+    window.history.replaceState(null, '', window.location.pathname + window.location.search)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const renderProjectDetail = () => {
@@ -216,10 +227,18 @@ function App() {
         </div>
 
         <nav className="nav">
-          <a href="#portfolio">Portfolio</a>
-          <a href="#about">À propos</a>
-          <a href="#services">Services</a>
-          <a href="#contact">Contact</a>
+          <button className="nav-link" onClick={() => scrollToSection('portfolio')}>
+            Portfolio
+          </button>
+          <button className="nav-link" onClick={() => scrollToSection('about')}>
+            À propos
+          </button>
+          <button className="nav-link" onClick={() => scrollToSection('services')}>
+            Services
+          </button>
+          <button className="nav-link" onClick={() => scrollToSection('contact')}>
+            Contact
+          </button>
         </nav>
       </header>
 
@@ -237,7 +256,9 @@ function App() {
               <button className="btn primary" onClick={() => openProject(projects[0])}>
                 Voir le portfolio
               </button>
-              <a className="btn secondary" href="#contact">Me contacter</a>
+              <button className="btn secondary" onClick={() => scrollToSection('contact')}>
+                Me contacter
+              </button>
             </div>
 
             <div className="social-row">
@@ -340,7 +361,9 @@ function App() {
 
           <div className="service-cta">
             <p>Pour une commande ou une collaboration, discutons directement de votre projet.</p>
-            <a href="#contact" className="btn primary">Discuter d’un projet</a>
+            <button className="btn primary" onClick={() => scrollToSection('contact')}>
+              Discuter d’un projet
+            </button>
           </div>
         </section>
 
